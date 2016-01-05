@@ -18,3 +18,5 @@ while True:
         print "Well done, %s! You guessed correcly! It's number %d! \
         Number of guesses is %d" % (name, answer, num_of_guesses)
         break
+
+# finished!
