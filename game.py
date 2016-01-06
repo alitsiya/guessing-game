@@ -1,44 +1,56 @@
 # Put your code here
 from random import randint
+import sys
+import pdb
 
 name = raw_input("Hello, what is your name? \n")
 
 def ask_guess():
-    while True:
+    guess = None
+    while not guess:
+        user_guess = raw_input("Your guess? \n")
         try:
-            guess = int(raw_input("Your guess? \n"))
-            break
+            user_guess = int(user_guess)
         except ValueError:
             print "Hahahahhahahah. No way!"
-    if guess > 0 and guess <= 100:
-        return guess
-    else:
-        print "Hahahahhahahah. No way!"
-        ask_guess()
+            continue
+        if user_guess > 0 and user_guess <= 100:
+            return user_guess
+        else:
+            print "Hahahahhahahah. No way!"
 
 def new_game():
-    print "%s , I'm thinking of a number between 1 and 100. \
-    Try to guess my number. \n" % name
+    BEST_SCORE = sys.maxint
+    game_played = False
+    again = None
 
-    answer = randint(1 , 100)
-
-    num_of_guesses = 0
-    while True:
-        guess = ask_guess()
-        num_of_guesses += 1
-        if guess > answer:
-            print "Your guess is too high, try again."
-        elif guess < answer:
-            print "Your guess is too low, try again."
-        else:
-            print "Well done, %s! You guessed correcly! It's number %d! \
-            Number of guesses is %d" % (name, answer, num_of_guesses)
+    while again == 'Y' or game_played == False:
+        if again == "N":
+            print "Good bye, %s" % name
             break
-    again = raw_input("Do you want to play the game again? Y/N ")
-    if again == "Y":
-        new_game()
-    else: 
-        print "Good bye, %s" % name
+        else:
+            game_played = True
+            print "%s , I'm thinking of a number between 1 and 100. \
+            Try to guess my number. \n" % name
+
+            answer = randint(1 , 100)
+            print answer #debugging cheat
+            num_of_guesses = 0
+            while True:
+                guess = ask_guess()
+                num_of_guesses += 1
+                if guess > answer:
+                    print "Your guess is too high, try again."
+                elif guess < answer:
+                    print "Your guess is too low, try again."
+                else:
+                    print "Well done, %s! You guessed correcly! It's number %d! \
+                    # Number of guesses is %d. Best number of guesses is %d." % (name, answer, num_of_guesses, BEST_SCORE)
+                    if BEST_SCORE > num_of_guesses:
+                        BEST_SCORE = num_of_guesses
+                    again = raw_input("Do you want to play the game again? Y/N ")
+                    break
+
 
 new_game()
 
